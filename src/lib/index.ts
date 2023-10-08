@@ -4,7 +4,7 @@ class StudentVueClient {
     username;
     password;
     client;
-    constructor(username, password, client) {
+    constructor(username: string, password: string, client: any) {
         this.username = username;
         this.password = password;
 
@@ -23,7 +23,7 @@ class StudentVueClient {
         return this._xmlJsonSerialize(this._makeServiceRequest('Attendance'));
     }
 
-    getGradebook(reportPeriod) {
+    getGradebook(reportPeriod: any) {
         let params = {};
         if (typeof reportPeriod !== 'undefined') {
             params.ReportPeriod = reportPeriod;
@@ -39,7 +39,7 @@ class StudentVueClient {
         return this._xmlJsonSerialize(this._makeServiceRequest('StudentInfo'));
     }
 
-    getSchedule(termIndex) {
+    getSchedule(termIndex: any) {
         let params = {};
         if (typeof termIndex !== 'undefined') {
             params.TermIndex = termIndex;
@@ -55,7 +55,7 @@ class StudentVueClient {
         return this._xmlJsonSerialize(this._makeServiceRequest('GetReportCardInitialData'));
     }
 
-    getReportCard(documentGuid) {
+    getReportCard(documentGuid: any) {
         return this._xmlJsonSerialize(this._makeServiceRequest('GetReportCardDocumentData', { DocumentGU: documentGuid }));
     }
 
@@ -63,15 +63,15 @@ class StudentVueClient {
         return this._xmlJsonSerialize(this._makeServiceRequest('GetStudentDocumentInitialData'));
     }
 
-    getDocument(documentGuid) {
+    getDocument(documentGuid: any) {
         return this._xmlJsonSerialize(this._makeServiceRequest('GetContentOfAttachedDoc', { DocumentGU: documentGuid }));
     }
 
-    _xmlJsonSerialize(servicePromise) {
+    _xmlJsonSerialize(servicePromise: Promise<any>) {
         return servicePromise.then(result => toJson(result[0].ProcessWebServiceRequestResult));
     }
 
-    _makeServiceRequest(methodName, params = {}, serviceHandle = 'PXPWebServices') {
+    _makeServiceRequest(methodName: string, params = {}, serviceHandle = 'PXPWebServices') {
         let paramStr = '&lt;Parms&gt;';
         Object.entries(params).forEach(([key, value]) => {
             paramStr += '&lt;' + key + '&gt;';
@@ -92,10 +92,10 @@ class StudentVueClient {
     }
 }
 
-function login(url, username, password, soapOptions = {}) {
+function login(url: string | URL, username: string, password: string, soapOptions = {}) {
     const host = new URL(url).host;
     const endpoint = `https://${ host }/Service/PXPCommunication.asmx`;
-    console.log(endpoint)
+
     const resolvedOptions = Object.assign({
         endpoint: endpoint, // enforces https
         escapeXML: false
@@ -107,7 +107,7 @@ function login(url, username, password, soapOptions = {}) {
         .then(client => new StudentVueClient(username, password, client));
 }
 
-function getDistrictUrls(zipCode) {
+function getDistrictUrls(zipCode: any) {
     return createClientAsync('https://support.edupoint.com/Service/HDInfoCommunication.asmx?WSDL', {
         endpoint: 'https://support.edupoint.com/Service/HDInfoCommunication.asmx',
         escapeXML: false
@@ -120,5 +120,3 @@ function getDistrictUrls(zipCode) {
             }, 'HDInfoServices'));
         });
 }
-
-module.exports = { login, getDistrictUrls };
