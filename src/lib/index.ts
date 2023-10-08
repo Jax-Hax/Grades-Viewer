@@ -67,8 +67,9 @@ class StudentVueClient {
         return this._xmlJsonSerialize(this._makeServiceRequest('GetContentOfAttachedDoc', { DocumentGU: documentGuid }));
     }
 
-    _xmlJsonSerialize(servicePromise: Promise<any>) {
-        return servicePromise.then(result => toJson(result[0].ProcessWebServiceRequestResult));
+    async _xmlJsonSerialize(servicePromise: Promise<any>) {
+        const result = await servicePromise;
+        return toJson(result[0].ProcessWebServiceRequestResult);
     }
 
     _makeServiceRequest(methodName: string, params = {}, serviceHandle = 'PXPWebServices') {
@@ -92,7 +93,7 @@ class StudentVueClient {
     }
 }
 
-function login(url: string | URL, username: string, password: string, soapOptions = {}) {
+export async function login(url: string | URL, username: string, password: string, soapOptions = {}) {
     const host = new URL(url).host;
     const endpoint = `https://${ host }/Service/PXPCommunication.asmx`;
 
@@ -103,20 +104,18 @@ function login(url: string | URL, username: string, password: string, soapOption
 
     const wsdlURL = endpoint + '?WSDL';
 
-    return createClientAsync(wsdlURL, resolvedOptions)
-        .then(client => new StudentVueClient(username, password, client));
+    const client = await createClientAsync(wsdlURL, resolvedOptions);
+    return new StudentVueClient(username, password, client);
 }
 
-function getDistrictUrls(zipCode: any) {
-    return createClientAsync('https://support.edupoint.com/Service/HDInfoCommunication.asmx?WSDL', {
+async function getDistrictUrls(zipCode: any) {
+    const client = await createClientAsync('https://support.edupoint.com/Service/HDInfoCommunication.asmx?WSDL', {
         endpoint: 'https://support.edupoint.com/Service/HDInfoCommunication.asmx',
         escapeXML: false
-    })
-        .then(client => {
-            const supportClient = new StudentVueClient('EdupointDistrictInfo', 'Edup01nt', client);
-            return supportClient._xmlJsonSerialize(supportClient._makeServiceRequest('GetMatchingDistrictList', {
-                MatchToDistrictZipCode: zipCode,
-                Key: '5E4B7859-B805-474B-A833-FDB15D205D40' // idk how safe this is
-            }, 'HDInfoServices'));
-        });
+    });
+    const supportClient = new StudentVueClient('EdupointDistrictInfo', 'Edup01nt', client);
+    return await supportClient._xmlJsonSerialize(supportClient._makeServiceRequest('GetMatchingDistrictList', {
+        MatchToDistrictZipCode: zipCode,
+        Key: '5E4B7859-B805-474B-A833-FDB15D205D40'
+    }, 'HDInfoServices'));
 }
