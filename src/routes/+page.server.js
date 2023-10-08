@@ -1,5 +1,15 @@
 import { createClientAsync } from "soap";
 import { toJson} from "xml2json";
+
+/** @type {import('./$types').Actions} */
+export const actions = {
+	default: async ({request}) => {
+        const data = await request.formData();
+		login(data.get('schoolURL'),data.get('username'),data.get('password')).then(client => client.getMessages())
+        .then(console.log);
+	}
+};
+
 class StudentVueClient {
     username;
     password;
@@ -95,7 +105,7 @@ class StudentVueClient {
 function login(url, username, password, soapOptions = {}) {
     const host = new URL(url).host;
     const endpoint = `https://${ host }/Service/PXPCommunication.asmx`;
-    console.log(endpoint)
+
     const resolvedOptions = Object.assign({
         endpoint: endpoint, // enforces https
         escapeXML: false
@@ -120,5 +130,3 @@ function getDistrictUrls(zipCode) {
             }, 'HDInfoServices'));
         });
 }
-
-module.exports = { login, getDistrictUrls };

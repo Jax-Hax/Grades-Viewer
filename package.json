@@ -14,6 +14,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
+		"@types/xml2json": "^0.11.4",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
 		"eslint": "^8.28.0",
@@ -29,6 +30,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"soap": "^1.0.0"
+		"soap": "^1.0.0",
+		"studentvue.js": "^0.1.1",
+		"xml2json": "^0.12.0"
 	}
 }
