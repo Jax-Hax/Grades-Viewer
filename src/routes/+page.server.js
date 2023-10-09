@@ -1,4 +1,5 @@
 import { login } from '$lib/index';
+import { json } from '@sveltejs/kit';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
@@ -9,7 +10,10 @@ export const actions = {
         const password = data.get('password')
         cookies.set('url', url, { path: '/' })
 		let client = await login(url, username, password);
-        let grades = client.getGradebook();
+        let grades = await client.getGradebook();
+        return {
+            grades: JSON.parse(grades)
+        };
 	}
 };
 
