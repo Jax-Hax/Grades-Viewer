@@ -9,7 +9,7 @@ export const actions = {
         const password = data.get('password')
         cookies.set('url', url, { path: '/' })
 		let client = await login(url, username, password);
-        console.log(client.getGradebook());
+        let grades = client.getGradebook();
 	}
 };
 
