@@ -1,3 +1,5 @@
+import { redirect } from '@sveltejs/kit';
+
 /** @type {import('./$types').Actions} */
 export const actions = {
 	default: async ({request, cookies }) => {
@@ -7,12 +9,8 @@ export const actions = {
         const password = data.get('password')
         cookies.set('url', url, { path: '/' })
         cookies.set('username', username, { path: '/' })
-		let client = await login(url, username, password);
-        let grades = await client.getGradebook();
-        getDistrictUrls('23113').then(console.log)
-        return {
-            grades: JSON.parse(grades)
-        };
+        cookies.set('password', password, { path: '/' })
+		throw redirect(302, '/dashboard');
 	}
 };
 

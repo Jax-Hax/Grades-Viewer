@@ -1,4 +1,5 @@
 import { login, getDistrictUrls } from '$lib/index';
+import { redirect } from '@sveltejs/kit';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
@@ -17,3 +18,12 @@ export const actions = {
 	}
 };
 
+
+export async function load({ cookies}) {
+    const url = cookies.get("url");
+    const username = cookies.get("username");
+    const password = cookies.get("password");
+    if (!url || !username || !password) {
+        throw redirect(302, '/')
+    }
+}
