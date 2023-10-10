@@ -1,3 +1,5 @@
+import { login, getDistrictUrls } from '$lib/index';
+
 /** @type {import('./$types').Actions} */
 export const actions = {
 	default: async ({request, cookies }) => {
@@ -6,7 +8,6 @@ export const actions = {
         const username = data.get('username')
         const password = data.get('password')
         cookies.set('url', url, { path: '/' })
-        cookies.set('username', username, { path: '/' })
 		let client = await login(url, username, password);
         let grades = await client.getGradebook();
         getDistrictUrls('23113').then(console.log)

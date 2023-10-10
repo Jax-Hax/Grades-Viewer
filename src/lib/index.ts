@@ -108,7 +108,7 @@ export async function login(url: string | URL, username: string, password: strin
     return new StudentVueClient(username, password, client);
 }
 
-async function getDistrictUrls(zipCode: any) {
+export async function getDistrictUrls(zipCode: any) {
     const client = await createClientAsync('https://support.edupoint.com/Service/HDInfoCommunication.asmx?WSDL', {
         endpoint: 'https://support.edupoint.com/Service/HDInfoCommunication.asmx',
         escapeXML: false
