@@ -10,7 +10,9 @@ export async function load({ cookies}) {
     }
     let client = await login(url, username, password);
     let grades = await client.getGradebook();
+    let studentInfo = await client.getStudentInfo();
     return {
-        grades: JSON.parse(grades)
+        grades: JSON.parse(grades),
+        studentInfo: JSON.parse(studentInfo)
     };
 }
