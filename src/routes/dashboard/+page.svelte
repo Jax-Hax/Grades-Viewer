@@ -1,7 +1,8 @@
 <script>
 	export let data;
+	let courseOptions = [];
+	$: courseOptions = data.grades.Gradebook.Courses.Course.map(course => course.Title);
 	let selectedCourse = null;
-	let courseOptions = ["ADV PLACEMENT ERPN HISTORY (SS220H)"];
 </script>
 <label for="courseDropdown">Select a Course:</label>
     <select id="courseDropdown" bind:value={selectedCourse} on:change={(event) => {selectedCourse = event.target.value}}>
