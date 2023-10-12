@@ -7,6 +7,8 @@
 <header>
 {#if data}
 <img src="data:image/png;base64,{data.studentInfo.StudentInfo.Photo}">
+<h2>{data.studentInfo.StudentInfo.FormattedName.split(' ')[0]}</h2>
+<h2>{data.studentInfo.StudentInfo.CurrentSchool}</h2>
 {/if}
 </header>
 <label for="courseDropdown">Select a Course:</label>
