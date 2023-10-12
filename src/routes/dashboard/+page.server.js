@@ -11,7 +11,6 @@ export async function load({ cookies}) {
     let client = await login(url, username, password);
     let grades = await client.getGradebook();
     let studentInfo = await client.getStudentInfo();
-    console.log(await client.listReportCards())
     return {
         grades: JSON.parse(grades),
         studentInfo: JSON.parse(studentInfo)
