@@ -2,11 +2,12 @@
 	export let data;
 	let courseOptions = [];
 	$: courseOptions = data.grades.Gradebook.Courses.Course.map(course => course.Title);
-	$: console.log(data.studentInfo)
 	let selectedCourse = null;
 </script>
 <header>
-
+{#if data}
+<img src="data:image/png;base64,{data.studentInfo.StudentInfo.Photo}">
+{/if}
 </header>
 <label for="courseDropdown">Select a Course:</label>
     <select id="courseDropdown" bind:value={selectedCourse} on:change={(event) => {selectedCourse = event.target.value}}>
