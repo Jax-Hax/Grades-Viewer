@@ -23,7 +23,8 @@
 	{#if selectedCourse === course.Title || !selectedCourse}
         <h1>{course.Title}</h1>
         <h3>Taught by {course.Staff}</h3>
-		{#each course.Marks.Mark.Assignments.Assignment as assignment}
+		<h3>{course.Marks.Mark.CalculatedScoreString}</h3>
+		{#each course.Marks.Mark.Assignments.Assignment as assignment} <!--Each Mark is a marking period, so make a for loop for that as well-->
 			<p>Name: {assignment.Measure}</p>
             <p>Grade: {assignment.Score}</p>
 			<br />
