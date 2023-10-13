@@ -16,19 +16,6 @@
 		<h2>{data.studentInfo.StudentInfo.CurrentSchool}</h2>
 	{/if}
 </header>
-<label for="courseDropdown">Select a Course:</label>
-<select
-	id="courseDropdown"
-	bind:value={selectedCourse}
-	on:change={(event) => {
-		selectedCourse = event.target.value;
-	}}
->
-	<option>Choose a course</option>
-	{#each courseOptions as option}
-		<option value={option}>{option}</option>
-	{/each}
-</select>
 
 {#if data}
 	<div id="courseGrid">
