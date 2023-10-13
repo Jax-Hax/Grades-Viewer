@@ -11,7 +11,7 @@
 
 <header>
 	{#if data}
-		<img src="data:image/png;base64,{data.studentInfo.StudentInfo.Photo}" />
+		<img src="data:image/png;base64,{data.studentInfo.StudentInfo.Photo}" alt="the student"/>
 		<h2>{data.studentInfo.StudentInfo.FormattedName.split(' ')[0]}</h2>
 		<h2>{data.studentInfo.StudentInfo.CurrentSchool}</h2>
 	{/if}
@@ -38,11 +38,13 @@
 				<h1>{course.Title}</h1>
 				<h3>Taught by {course.Staff}</h3>
 				<h3>{course.Marks.Mark.CalculatedScoreString}</h3>
+				{#if selectedCourse === course.Title}
 				{#each course.Marks.Mark.Assignments.Assignment as assignment}
 					<p>Name: {assignment.Measure}</p>
 					<p>Grade: {assignment.Score}</p>
 					<br />
 				{/each}
+				{/if}
 			</div>
 		{/if}
 	{/each}
@@ -51,19 +53,17 @@
 
 <style>
 	#courseGrid {
-		display: grid;
-		gap: 1rem;
-		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-		align-items: center;
-		padding: 1em;
-	}
-	#courseGrid div {
 		background-color: #2c2c2c;
 		padding: 2em;
 		color: white;
 		border-radius: 16px;
 		font-size: 1.25em;
-		border-radius: 16px;
 		text-align: center;
+	}
+	#courseGrid div {
+		padding: 1em;
+		background-color: #363636;
+		border-radius: 16px;
+		margin: 0.5em;
 	}
 </style>
