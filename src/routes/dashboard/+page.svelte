@@ -11,7 +11,11 @@
 
 <header style="padding: 1em;">
 	{#if data}
-		<img src="data:image/png;base64,{data.studentInfo.StudentInfo.Photo}" style="border-radius: 50%" alt="the student" />
+		<img
+			src="data:image/png;base64,{data.studentInfo.StudentInfo.Photo}"
+			style="border-radius: 50%"
+			alt="the student"
+		/>
 		<h2>{data.studentInfo.StudentInfo.FormattedName.split(' ')[0]}</h2>
 		<h2>{data.studentInfo.StudentInfo.CurrentSchool}</h2>
 	{/if}
@@ -44,11 +48,18 @@
 				<h3>Taught by {course.Staff}</h3>
 				<h3>{course.Marks.Mark.CalculatedScoreString}</h3>
 				{#if selectedCourse === course.Title}
-					{#each course.Marks.Mark.Assignments.Assignment as assignment}
-						<p>Name: {assignment.Measure}</p>
-						<p>Grade: {assignment.Score}</p>
-						<br />
-					{/each}
+					<div style="background-color: #383838; padding: 1em"><div id="gradesTable">
+						<p class="boldedHeaders">Name</p>
+						<p class="boldedHeaders">Score</p>
+						<p class="boldedHeaders">Assignment Type</p>
+						<p class="boldedHeaders">Date</p>
+						{#each course.Marks.Mark.Assignments.Assignment as assignment}
+							<p>{assignment.Measure}</p>
+							<p>{assignment.Score}</p>
+							<p>{assignment.Type}</p>
+							<p>{assignment.Date}</p>
+						{/each}
+					</div></div>
 				{/if}
 			</div>
 		{/each}
@@ -60,13 +71,32 @@
 		background-color: #2c2c2c;
 		padding: 0.5em;
 		color: white;
-		border-radius: 16px;
+		border-radius: 2em;
 		font-size: 1.25em;
 		text-align: center;
 	}
-	h2{
-		color: white
+	h2 {
+		color: white;
 	}
+	#gradesTable > p {
+		padding: 1em;
+		color: white;
+		background-color: #383838;
+	}
+	.boldedHeaders{
+		border-bottom: 2px solid black !important;
+		border-left: 1px solid black;
+		border-right: 1px solid black
+	}
+	#gradesTable {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		background-color: black !important;
+		overflow: scroll;
+		gap: 1px;
+		padding: 0 !important;
+	}
+	
 	#expand {
 		color: white;
 		font-size: 35px;
@@ -75,7 +105,7 @@
 	}
 	#courseGrid div {
 		padding: 1em;
-		background-color: #363636;
+		background-color: #333333;
 		border-radius: 1.5em;
 		margin: 0.5em;
 	}
