@@ -24,7 +24,7 @@
 		selectedCourse = event.target.value;
 	}}
 >
-	<option value="">Choose a course</option>
+	<option>Choose a course</option>
 	{#each courseOptions as option}
 		<option value={option}>{option}</option>
 	{/each}
@@ -33,20 +33,24 @@
 {#if data}
 <div id="courseGrid">
 	{#each courses as course}
-		{#if selectedCourse === course.Title || !selectedCourse}
-			<div>
-				<h1>{course.Title}</h1>
-				<h3>Taught by {course.Staff}</h3>
-				<h3>{course.Marks.Mark.CalculatedScoreString}</h3>
-				{#if selectedCourse === course.Title}
-				{#each course.Marks.Mark.Assignments.Assignment as assignment}
-					<p>Name: {assignment.Measure}</p>
-					<p>Grade: {assignment.Score}</p>
-					<br />
-				{/each}
-				{/if}
+		<div>
+			<!-- svelte-ignore a11y-click-events-have-key-events -->
+			<!-- svelte-ignore a11y-no-static-element-interactions -->
+			<div style="display: flex; align-items: center">
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<span id="expand" on:click={() => selectedCourse = course.Title} class="material-symbols-outlined">remove</span>
+				<h1 style="text-align: center; flex: 1;">{course.Title}</h1>
 			</div>
-		{/if}
+			<h3>Taught by {course.Staff}</h3>
+			<h3>{course.Marks.Mark.CalculatedScoreString}</h3>
+			{#if selectedCourse === course.Title}
+			{#each course.Marks.Mark.Assignments.Assignment as assignment}
+				<p>Name: {assignment.Measure}</p>
+				<p>Grade: {assignment.Score}</p>
+				<br />
+			{/each}
+			{/if}
+		</div>
 	{/each}
 </div>
 {/if}
@@ -59,6 +63,12 @@
 		border-radius: 16px;
 		font-size: 1.25em;
 		text-align: center;
+	}
+	#expand{
+		color: white;
+		font-size: 35px;
+		user-select: none;
+		cursor: pointer;
 	}
 	#courseGrid div {
 		padding: 1em;
