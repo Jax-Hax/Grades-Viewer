@@ -9,9 +9,9 @@
 	let selectedCourse = null;
 </script>
 
-<header>
+<header style="padding: 1em;">
 	{#if data}
-		<img src="data:image/png;base64,{data.studentInfo.StudentInfo.Photo}" alt="the student" />
+		<img src="data:image/png;base64,{data.studentInfo.StudentInfo.Photo}" style="border-radius: 50%" alt="the student" />
 		<h2>{data.studentInfo.StudentInfo.FormattedName.split(' ')[0]}</h2>
 		<h2>{data.studentInfo.StudentInfo.CurrentSchool}</h2>
 	{/if}
@@ -58,11 +58,14 @@
 <style>
 	#courseGrid {
 		background-color: #2c2c2c;
-		padding: 2em;
+		padding: 0.5em;
 		color: white;
 		border-radius: 16px;
 		font-size: 1.25em;
 		text-align: center;
+	}
+	h2{
+		color: white
 	}
 	#expand {
 		color: white;
@@ -73,7 +76,7 @@
 	#courseGrid div {
 		padding: 1em;
 		background-color: #363636;
-		border-radius: 16px;
+		border-radius: 1.5em;
 		margin: 0.5em;
 	}
 </style>
